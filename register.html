@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="register-page">
+
+
+
+<body>
+  <h2>Register</h2>
+  <form id="registerForm">
+    <input type="text" id="newUsername" placeholder="Username" required />
+    <input type="password" id="newPassword" placeholder="Password" required />
+    <button type="submit">Register</button>
+  </form>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAKVVKIT7jQ4m6_4lvBMvmzlTWskqayOys",
+      authDomain: "soil-f6574.firebaseapp.com",
+      databaseURL: "https://soil-f6574-default-rtdb.firebaseio.com",
+      projectId: "soil-f6574",
+      storageBucket: "soil-f6574.appspot.com",
+      messagingSenderId: "710679300258",
+      appId: "1:710679300258:web:e54a6444f447ab8dbe6ffb"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const registerForm = document.getElementById("registerForm");
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("newUsername").value;
+      const password = document.getElementById("newPassword").value;
+
+      const newUser = {
+        username: username,
+        password: password,
+        role: "user"
+      };
+
+      const userRef = ref(db, "users");
+      push(userRef, newUser)
+        .then(() => {
+          alert("Registration successful!");
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          console.error("Registration error:", error);
+          alert("Error registering user.");
+        });
+    });
+  </script>
+</body>
+</html>

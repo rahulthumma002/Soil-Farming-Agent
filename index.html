@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Soil & Crop Portal - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="index-page">
+<body>
+  <h1>Soil & Crop Information Portal</h1>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <select id="role">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button type="submit">Login</button>
+    <p>New User? <a href="register.html">Register here</a></p>
+  </form>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getDatabase, ref, push, get, child } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAKVVKIT7jQ4m6_4lvBMvmzlTWskqayOys",
+      authDomain: "soil-f6574.firebaseapp.com",
+      databaseURL: "https://soil-f6574-default-rtdb.firebaseio.com",  // ✅ important
+      projectId: "soil-f6574",
+      storageBucket: "soil-f6574.appspot.com",
+      messagingSenderId: "710679300258",
+      appId: "1:710679300258:web:e54a6444f447ab8dbe6ffb"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // --- Login ---
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const role = document.getElementById("role").value;
+
+        const dbRef = ref(db);
+        try {
+          const snapshot = await get(child(dbRef, "users"));
+          if (snapshot.exists()) {
+            let found = false;
+            snapshot.forEach(childSnap => {
+              const user = childSnap.val();
+              if (user.username === username && user.password === password && user.role === role) {
+                found = true;
+              }
+            });
+
+            if (found) {
+              window.location.href = role === "admin" ? "admin.html" : "user.html";
+            } else {
+              alert("Invalid credentials.");
+            }
+          } else {
+            alert("No users found in database.");
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          alert("Error logging in.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

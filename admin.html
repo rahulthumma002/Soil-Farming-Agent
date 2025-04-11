@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="admin-page">
+
+<body>
+  <h1>Admin Panel - Soil & Crop Portal</h1>
+
+  <h2>Add Soil Information</h2>
+  <form id="soilForm">
+    <input type="text" id="soilType" placeholder="Soil Type" required />
+    <input type="text" id="soilInfo" placeholder="Soil Information" required />
+    <button type="submit">Add Soil</button>
+  </form>
+
+  <h2>Add Distributor Information</h2>
+  <form id="distributorForm">
+    <input type="text" id="distributorName" placeholder="Distributor Name" required />
+    <input type="text" id="distributorInfo" placeholder="Distributor Info" required />
+    <button type="submit">Add Distributor</button>
+  </form>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAKVVKIT7jQ4m6_4lvBMvmzlTWskqayOys",
+      authDomain: "soil-f6574.firebaseapp.com",
+      databaseURL: "https://soil-f6574-default-rtdb.firebaseio.com",
+      projectId: "soil-f6574",
+      storageBucket: "soil-f6574.appspot.com",
+      messagingSenderId: "710679300258",
+      appId: "1:710679300258:web:e54a6444f447ab8dbe6ffb"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Handle soil form submission
+    const soilForm = document.getElementById("soilForm");
+    soilForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const soilType = document.getElementById("soilType").value;
+      const soilInfo = document.getElementById("soilInfo").value;
+
+      push(ref(db, "soil"), {
+        type: soilType,
+        info: soilInfo
+      }).then(() => {
+        alert("Soil information added!");
+        soilForm.reset();
+      }).catch((error) => {
+        console.error("Error adding soil:", error);
+        alert("Failed to add soil info.");
+      });
+    });
+
+    // Handle distributor form submission
+    const distributorForm = document.getElementById("distributorForm");
+    distributorForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("distributorName").value;
+      const info = document.getElementById("distributorInfo").value;
+
+      push(ref(db, "distributors"), {
+        name: name,
+        info: info
+      }).then(() => {
+        alert("Distributor info added!");
+        distributorForm.reset();
+      }).catch((error) => {
+        console.error("Error adding distributor:", error);
+        alert("Failed to add distributor info.");
+      });
+    });
+  </script>
+</body>
+</html>

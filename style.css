@@ -1,0 +1,116 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Body Style */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Background Images for Pages */
+body.index-page,
+body.admin-page {
+    background-image: url('leaf.webp');
+    background-attachment: fixed;
+}
+
+body.register-page,
+body.user-page {
+    background-image: url('soil.jpg');
+    background-attachment: fixed;
+}
+
+/* Headings */
+h1, h2 {
+    color: #dfdad5;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Card */
+form {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+/* Form Elements */
+input, select, button {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* Button Styling */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Link Styling */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Paragraph below button */
+form p {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+/* Admin layout - Multiple Forms */
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+/* List styles */
+ul {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+ul li {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-left: 5px solid #4CAF50;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 16px;
+}
